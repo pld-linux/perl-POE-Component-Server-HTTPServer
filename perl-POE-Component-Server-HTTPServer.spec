@@ -9,7 +9,7 @@
 Summary:	perl(POE::Component::Server::HTTPServer) - serve HTTP requests
 Name:		perl-POE-Component-Server-HTTPServer
 Version:	0.9.2
-Release:	0.1
+Release:	0.2
 # "same as perl"
 License:	GPLv1 or Artistic
 Group:		Development/Languages/Perl
@@ -44,6 +44,9 @@ request processing in a slightly different manner.
 	INSTALLDIRS=vendor
 
 %{__make}
+pod2man --section 3 blib/lib/POE/Component/Server/HTTPServer/Examples.pod blib/man3/POE::Component::Server::HTTPServer::Examples.3pm
+gzip blib/man3/POE::Component::Server::HTTPServer::Examples.3pm
+
 
 %{?with_tests:%{__make} test}
 
