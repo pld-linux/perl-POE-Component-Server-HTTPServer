@@ -18,10 +18,9 @@ Source0:	http://www.cpan.org/modules/by-module/%{pdir}/%{pdir}-%{pnam}-%{version
 URL:		http://search.cpan.org/dist/%{pdir}-%{pnam}
 BuildRequires:	perl-devel >= 1:5.8.0
 BuildRequires:	rpm-perlprov >= 4.1-13
-#BuildRequires:	-
 %if %{with autodeps} || %{with tests}
-#BuildRequires:	perl-
-#BuildRequires:	perl-
+BuildRequires:	perl-MIME-Types
+BuildRequires:	perl-POE
 %endif
 #Requires:	-
 #Provides:	-
@@ -30,11 +29,11 @@ BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Perl module POE::Component::Server::HTTPServer is a POE based HTTP server.
-Requests are dispatched based on an ordered list of "prefix => handler"
-pairs.
-This module was inspired by POE::Component::Server::HTTP, which deals with
-request processing in a slightly different manner.
+Perl module POE::Component::Server::HTTPServer is a POE based HTTP
+server. Requests are dispatched based on an ordered list of "prefix =>
+handler" pairs. This module was inspired by
+POE::Component::Server::HTTP, which deals with request processing in a
+slightly different manner.
 
 %prep
 %setup -q -n %{pdir}-%{pnam}-%{version}
@@ -45,8 +44,6 @@ request processing in a slightly different manner.
 
 %{__make}
 pod2man --section 3 blib/lib/POE/Component/Server/HTTPServer/Examples.pod blib/man3/POE::Component::Server::HTTPServer::Examples.3pm
-gzip blib/man3/POE::Component::Server::HTTPServer::Examples.3pm
-
 
 %{?with_tests:%{__make} test}
 
@@ -55,6 +52,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} pure_install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+rm -f $RPM_BUILD_ROOT%{perl_vendorlib}/POE/Component/Server/HTTPServer/Examples.pod
 
 %clean
 rm -rf $RPM_BUILD_ROOT
